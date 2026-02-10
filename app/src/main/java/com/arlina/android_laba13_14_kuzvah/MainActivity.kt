@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.arlina.android_laba13_14_kuzvah.ui.theme.Android_Laba1314_KuzvahTheme
+import com.arlina.android_laba13_14_kuzvah.ui_model.GameScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,9 +20,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Android_Laba1314_KuzvahTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    innerPadding ->
+                    GameScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -30,18 +33,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Android_Laba1314_KuzvahTheme {
-        Greeting("Android")
-    }
-}

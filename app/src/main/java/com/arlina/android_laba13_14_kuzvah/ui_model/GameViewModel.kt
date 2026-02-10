@@ -14,11 +14,7 @@ class GameViewModel: ViewModel() {
     private var usedWords: MutableSet<String> = mutableSetOf()
 
     init{
-        reserGame()
-    }
-
-    fun reserGame() {
-        TODO("Not yet implemented")
+        resetGame()
     }
 
     private fun shuffleCurrentWord(word: String): String{
