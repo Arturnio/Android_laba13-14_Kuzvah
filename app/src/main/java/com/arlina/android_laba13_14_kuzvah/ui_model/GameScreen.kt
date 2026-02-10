@@ -58,8 +58,12 @@ fun GameScreen(
         )
         GameLoyout(
             currentScrambleWord = gameUiState.currentScrambledWord,
-            onUserGuessChanged = {},
-            onKeyboardDone = {}
+            userGuess = gameViewModel.userGuess,
+            onUserGuessChanged = { gameViewModel.updateUserGuess(it) },
+            onKeyboardDone = { gameViewModel.checkUserGuess() },
+            isGuessWrong = gameUiState.isGuessedWordWrong,
+            onSubmitClicked = { gameViewModel.checkUserGuess() },
+            onSkipClicked = { gameViewModel.skipWord() }
         )
     }
 }
@@ -99,8 +103,12 @@ fun GameStatus(
 @Composable
 fun GameLoyout(
     currentScrambleWord: String,
+    userGuess: String,
     onUserGuessChanged: (String) -> Unit,
     onKeyboardDone: () -> Unit,
+    isGuessWrong: Boolean,
+    onSubmitClicked: () -> Unit,
+    onSkipClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var userGuess by remember { mutableStateOf("") }
@@ -141,6 +149,7 @@ fun GameLoyout(
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             label = {Text("Введите слово")},
+            isError = isGuessWrong,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done
             ),
@@ -148,15 +157,22 @@ fun GameLoyout(
                 onDone = {onKeyboardDone()}
             )
         )
+        if (isGuessWrong){
+            Text(
+                text = "неправильно! попробуй езе раз",
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
         Button(
-            onClick = {},
+            onClick = onSubmitClicked,
             modifier = Modifier.fillMaxWidth()
         ) {Text(
                 text = "проверить",
                 fontSize = 16.sp
             )}
         OutlinedButton(
-            onClick = {},
+            onClick = onSkipClicked,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
